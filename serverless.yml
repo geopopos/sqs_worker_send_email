@@ -8,9 +8,9 @@ provider:
   runtime: python3.8
   profile: serverless-admin
   region: us-east-1
-  # environment:
-  #   TWILIO_ACCOUNT_SID: ${param:TWILIO_ACCOUNT_SID}
-  #   TWILIO_AUTH_TOKEN: ${param:TWILIO_AUTH_TOKEN}
+  environment:
+    SENDING_DOMAIN: ${param:SENDING_DOMAIN}
+    MAILGUN_API_KEY: ${param:MAILGUN_API_KEY}
 
 constructs:
   jobs:
