@@ -63,7 +63,6 @@ def consumer(event, context):
         "POST",
         mailgun_api,
         auth=("api", mailgun_api_key),
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
         data={"from": f"Lead Notifier <no-reply@{sending_domain}>",
                 "to": [to_address],
                 "subject": message_subject,
