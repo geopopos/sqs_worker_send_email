@@ -1,0 +1,38 @@
+org: groros
+app: pay-per-lead-project
+service: send-new-lead-notification-email
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.8
+  profile: serverless-admin
+  region: us-east-1
+  # environment:
+  #   TWILIO_ACCOUNT_SID: ${param:TWILIO_ACCOUNT_SID}
+  #   TWILIO_AUTH_TOKEN: ${param:TWILIO_AUTH_TOKEN}
+
+constructs:
+  jobs:
+    type: queue
+    worker:
+      handler: handler.consumer
+
+functions:
+  producer:
+    handler: handler.producer
+    events:
+      - httpApi:
+          method: post
+          path: /produce
+    environment:
+      QUEUE_URL: ${construct:jobs.queueUrl}
+  consumer:
+    handler: handler.consumer 
+
+plugins:
+  - serverless-lift
+  - serverless-python-requirements
+package:
+  patterns:
+    - '!node_modules/**'
